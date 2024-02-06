@@ -1,0 +1,27 @@
+---
+
+- name: fill database
+  community.mysql.mysql_db:
+    name: "{{ ims_icscf_db }}"
+    login_user: "{{ ims_icscf_user }}"
+    login_password: "{{ ims_icscf_pass }}"
+    state: import
+    target: "/usr/share/doc/kamailio/examples/ims/icscf/icscf.sql"
+  when: ims_icscf_db_init
+
+- name: copy static configuration
+  copy:
+    src: "icscf/{{ item }}"
+    dest: "/etc/kamailio_icscf/{{ item }}"
+  with_items:
+    - kamailio.cfg
+  notify: reload kamailio icscf
+
+- name: copy template configuration
+  template:
+    src: "icscf/{{ item }}"
+    dest: "/etc/kamailio_icscf/{{ item }}"
+  with_items:
+    - icscf.cfg
+    - icscf.xml
+  notify: reload kamailio icscf

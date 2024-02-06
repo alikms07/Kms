@@ -1,0 +1,40 @@
+---
+
+- name: fill database
+  community.mysql.mysql_db:
+    name: "{{ ims_pcscf_db }}"
+    login_user: "{{ ims_pcscf_user }}"
+    login_password: "{{ ims_pcscf_pass }}"
+    state: import
+    target: "/usr/share/kamailio/mysql/{{ item }}"
+  with_items:
+  - standard-create.sql
+  - presence-create.sql
+  - ims_usrloc_pcscf-create.sql
+  - ims_dialog-create.sql
+  when: ims_pcscf_db_init
+
+- name: copy route files
+  synchronize:
+    src: pcscf/route/
+    dest: /etc/kamailio_pcscf/route/
+  notify: reload kamailio pcscf
+
+- name: copy static configuration
+  copy:
+    src: "pcscf/{{ item }}"
+    dest: "/etc/kamailio_pcscf/{{ item }}"
+  with_items:
+    - kamailio.cfg
+    - tls.cfg
+  notify: reload kamailio pcscf
+
+- name: copy template configuration
+  template:
+    src: "pcscf/{{ item }}"
+    dest: "/etc/kamailio_pcscf/{{ item }}"
+  with_items:
+    - dispatcher.list
+    - pcscf.cfg
+    - pcscf.xml
+  notify: reload kamailio pcscf

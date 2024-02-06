@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DiameterPeer 
+	FQDN="pcscf.mnc{{ ims_mnc }}.mcc{{ ims_mcc }}.3gppnetwork.org"
+	Realm="ims.mnc{{ ims_mnc }}.mcc{{ ims_mcc }}.3gppnetwork.org"
+	Vendor_Id="10415"
+	Product_Name="CDiameterPeer"
+	AcceptUnknownPeers="1"
+	DropUnknownOnDisconnect="1"
+	Tc="30"
+	Workers="4"
+	QueueLength="8"
+	TransactionTimeout="5"
+	SessionsHashSize="128"
+	DefaultAuthSessionTimeout="3600"
+	MaxAuthSessionTimeout="3600"
+>
+	<Peer FQDN="pcrf.mnc{{ ims_mnc }}.mnc{{ ims_mcc }}.3gppnetwork.org" Realm="ims.mnc{{ ims_mnc }}.mnc{{ ims_mcc }}.3gppnetwork.org" port="3868"/> 
+
+	<Acceptor port="{{ ims_pcscf_diameter_bind_port }}" bind="{{ ims_pcscf_diameter_bind_ip }}"/>
+
+	<Auth id="16777236" vendor="10415"/> <!-- 3GPP Rx -->
+	<Auth id="16777236" vendor="0"/> <!-- 3GPP Rx -->
+
+	<DefaultRoute FQDN="pcrf.mnc{{ ims_mnc }}.mnc{{ ims_mcc }}.3gppnetwork.org" metric="10"/>
+
+</DiameterPeer>

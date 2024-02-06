@@ -1,0 +1,37 @@
+---
+
+- name: fill database
+  community.mysql.mysql_db:
+    name: "{{ ims_scscf_db }}"
+    login_user: "{{ ims_scscf_user }}"
+    login_password: "{{ ims_scscf_pass }}"
+    state: import
+    target: "/usr/share/kamailio/mysql/{{ item }}"
+  with_items:
+  - standard-create.sql
+  - presence-create.sql
+  - ims_usrloc_scscf-create.sql
+  - ims_dialog-create.sql
+  - ims_charging-create.sql
+  when: ims_scscf_db_init
+
+- name: copy static configuration
+  copy:
+    src: "scscf/{{ item }}"
+    dest: "/etc/kamailio_scscf/{{ item }}"
+  with_items:
+    - kamailio.cfg
+    - CxDataType_Rel6.xsd
+    - CxDataType_Rel7.xsd
+    - CxDataType_Rel8.xsd
+  notify: reload kamailio scscf
+
+- name: copy template configuration
+  template:
+    src: "scscf/{{ item }}"
+    dest: "/etc/kamailio_scscf/{{ item }}"
+  with_items:
+    - dispatcher.list
+    - scscf.cfg
+    - scscf.xml
+  notify: reload kamailio scscf

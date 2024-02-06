@@ -1,0 +1,32 @@
+---
+
+ims_mcc: "901"
+ims_mnc: "070"
+
+# create pcscf
+## wether db should be initialized (any idea if we can check this?)
+ims_pcscf_db_init: false
+ims_pcscf_db: pcscf
+ims_pcscf_user: pcscf
+ims_pcscf_pass: pcscf
+ims_pcscf_sip_bind: "udp:0.0.0.0:5060"
+ims_pcscf_diameter_bind_ip: 192.168.150.155
+ims_pcscf_diameter_bind_port: 3868
+
+# create icscf
+ims_icscf_db_init: false
+ims_icscf_db: icscf
+ims_icscf_user: icscf
+ims_icscf_pass: icscf
+ims_icscf_sip_bind: "udp:0.0.0.0:4060"
+ims_icscf_diameter_bind_ip: 192.168.150.155
+ims_icscf_diameter_bind_port: 3867
+
+# create scscf
+ims_scscf_db_init: false
+ims_scscf_db: scscf
+ims_scscf_user: scscf
+ims_scscf_pass: scscf
+ims_scscf_sip_bind: "udp:0.0.0.0:3060"
+ims_scscf_diameter_bind_ip: 192.168.150.155
+ims_scscf_diameter_bind_port: 3866

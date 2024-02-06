@@ -1,0 +1,56 @@
+---
+- name: install kamilio
+  apt:
+    pkg:
+    - kamailio
+    - kamailio-ims-modules
+    - kamailio-sctp-modules
+    - kamailio-utils-modules
+    - kamailio-mysql-modules
+    - kamailio-presence-modules
+    - kamailio-python3-modules
+    - kamailio-utils-modules
+    - kamailio-xml-modules
+    - kamcli
+    - rtpengine
+    - python3-mysqldb
+
+- name: install mariadb
+  apt:
+    pkg:
+    - mariadb-server
+
+- name: disable default kamailio
+  systemd_service:
+    name: kamailio.service
+    state: stopped
+    enabled: no
+
+- name: create generic cscf
+  include_tasks: cscf.yml
+  with_items:
+    - pcscf
+    - icscf
+    - scscf
+
+- include_tasks: pcscf.yml
+- include_tasks: icscf.yml
+- include_tasks: scscf.yml
+  
+#- name: create database user
+#  community.mysql.mysql_user:
+#    name: {{ ims_pcscf_user }}
+#    password: {{ ims_pcscf_pass }}
+#    state: present
+#
+#- name: create database user
+#  community.mysql.mysql_user:
+#    name: {{ ims_icscf_user }}
+#    password: {{ ims_icscf_pass }}
+#    state: present
+#  
+#- name: create database user
+#  community.mysql.mysql_user:
+#    name: {{ ims_scscf_user }}
+#    password: {{ ims_scscf_pass }}
+#    state: present

@@ -1,0 +1,15 @@
+---
+- name: reload kamailio pcscf
+  service:
+    name: kamailio_pcscf
+    state: reloaded
+
+- name: reload kamailio icscf
+  service:
+    name: kamailio_icscf
+    state: reloaded
+
+- name: reload kamailio scscf
+  service:
+    name: kamailio_scscf
+    state: reloaded

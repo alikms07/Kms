@@ -1,0 +1,34 @@
+---
+- name: create config directories
+  file:
+    path: "/etc/kamailio_{{ item }}"
+    state: directory
+
+- name: create mysql database
+  community.mysql.mysql_db:
+    db: "{{ lookup('ansible.builtin.vars', 'ims_' + item + '_db') }}"
+    state: present
+
+- name: create database user
+  community.mysql.mysql_user:
+    name: "{{ lookup('ansible.builtin.vars', 'ims_' + item + '_user') }}"
+    password: "{{ lookup('ansible.builtin.vars', 'ims_' + item + '_pass') }}"
+    priv: "{{ lookup('ansible.builtin.vars', 'ims_' + item + '_db') }}.*:ALL,GRANT"
+    state: present
+
+- name: generate systemd units
+  template:
+    src: kamailio.service
+    dest: /lib/systemd/system/kamailio_{{ item }}.service
+  register: ims_cscf_unit
+
+- name: systemd reload
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+  when: ims_cscf_unit.changed
+
+- name: enable and start service unit
+  ansible.builtin.systemd_service:
+    name: "kamailio_{{ item }}"
+    enabled: yes
+    #state: started
