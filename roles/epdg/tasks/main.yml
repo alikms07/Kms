@@ -1,0 +1,64 @@
+---
+- name: install required packages
+  ansible.builtin.apt:
+    pkg:
+      - iptables
+      - linux-image-amd64
+      - libgtp6
+      #- libgtpnl-tools
+      - apt-transport-https
+
+- name: install repo key
+  ansible.builtin.get_url:
+    url: https://downloads.osmocom.org/packages/osmocom%3A/nightly/Debian_12/Release.key
+    dest: /etc/apt/keyrings/osmocom_debian_12.asc
+
+- name: add osmocom nightly repo
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/osmocom_debian_12.asc] https://downloads.osmocom.org/packages/osmocom%3A/nightly/Debian_12/ ./"
+    state: present
+
+- name: install build dependencies for strongswan
+  ansible.builtin.apt:
+    pkg:
+      - strongswan
+    state: build-dep
+
+- name: setup strongswan repo
+  ansible.builtin.git:
+    repo: "https://gitea.osmocom.org/ims-volte-vowifi/strongswan.git"
+    dest: "/srv/strongswan"
+    update: no
+
+- name: create strongswan directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - "/usr/local/etc/swanctl"
+
+- name: strongswan configuration files
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "/usr/local/etc/{{ item }}"
+  with_items:
+  - "swanctl/swanctl.conf"
+
+- name: install rebar3
+  ansible.builtin.apt:
+    pkg:
+    - rebar3
+    - libpcap-dev
+
+- name: setup osmo-epdg repo
+  ansible.builtin.git:
+    repo: https://gitea.osmocom.org/erlang/osmo-epdg
+    dest: /srv/osmo-epdg
+    update: no
+
+- name: osmo-epdg configuration
+  ansible.builtin.template:
+    src: "osmo-epdg/local.config"
+    dest: "/srv/osmo-epdg/config/local.config"
+    variable_start_string: "$@"
+    variable_end_string: "@$"
