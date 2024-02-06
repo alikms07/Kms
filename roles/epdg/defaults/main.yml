@@ -1,0 +1,12 @@
+---
+epdg_swx_hss_ip: 127.0.0.2
+epdg_swx_hss_port: 3868
+
+epdg_s6b_bind_ip: 127.0.0.1
+epdg_s6b_bind_port: 
+
+epdg_gtpc_bind_ip: 127.0.0.1
+epdg_gtpc_bind_port: 2123
+
+epdg_gtpc_pgw_ip: 127.0.0.3
+epdg_gtpc_pgw_port: 2123
