@@ -1,0 +1,29 @@
+---
+- name: configure hss diameter connections
+  ansible.builtin.lineinfile:
+    path: /etc/freeDiameter/hss.conf
+    line: "{{ item }}"
+  with_items:
+  - 'ConnectPeer = "epdg.localdomain" { No_TLS; };'
+  - 'ConnectPeer = "aaa.localdomain" { No_TLS; };'
+
+- name: configure pcrf diameter connections
+  ansible.builtin.lineinfile:
+    path: /etc/freeDiameter/pcrf.conf
+    line: 'ConnectPeer = "smf.localdomain" { ConnectTo = "{{ epc_smf_bind_ip }}"; No_TLS; };'
+    regexp: 'ConnectPeer = "smf.localdomain"'
+
+- name: configure smf diameter connections
+  ansible.builtin.lineinfile:
+    path: /etc/freeDiameter/smf.conf
+    line: 'ConnectPeer = "aaa.localdomain" { ConnectTo = "{{ epdg_s6b_bind_ip }}"; No_TLS; };'
+
+- name: configure smf open5gs
+  template:
+    src: open5gs-smf.yaml
+    dest: /etc/open5gs/smf.yaml
+  
+- name: configure upf open5gs
+  template:
+    src: open5gs-upf.yaml
+    dest: /etc/open5gs/upf.yaml

@@ -1,0 +1,8 @@
+---
+
+epc_hss_bind_ip: 10.74.0.21
+epc_pcrf_bind_ip: 10.74.0.22
+epc_smf_bind_ip: 10.74.0.23
+epc_upf_bind_ip: 10.74.0.24
+epc_ue_network: 10.45.0.0/16
+epc_ue_dns: 8.8.4.4

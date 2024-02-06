@@ -1,0 +1,35 @@
+---
+- name: install required packages
+  ansible.builtin.apt:
+    pkg:
+      - iptables
+      - apt-transport-https
+
+- name: install repo key
+  ansible.builtin.get_url:
+    url: https://downloads.osmocom.org/packages/osmocom%3A/nightly/Debian_12/Release.key
+    dest: /etc/apt/keyrings/osmocom_debian_12.asc
+
+- name: add osmocom nightly repo
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/osmocom_debian_12.asc] https://downloads.osmocom.org/packages/osmocom%3A/nightly/Debian_12/ ./"
+    state: present
+
+# www.mongodb.org doesn't support ipv6
+- name: mongo install repo key
+  ansible.builtin.get_url:
+    url: https://pgp.mongodb.com/server-7.0.asc
+    dest: /etc/apt/keyrings/mongodb-org-7.0.asc
+
+- name: add mongodb repo
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/mongodb-org-7.0.asc] http://repo.mongodb.org/apt/debian bookworm/mongodb-org/7.0 main"
+    state: present
+
+- name: install open5gs
+  ansible.builtin.apt:
+    pkg:
+      - open5gs-hss
+      - open5gs-pcrf
+      - open5gs-smf
+      - open5gs-upf
