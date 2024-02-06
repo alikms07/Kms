@@ -1,0 +1,29 @@
+- name: host ims
+  hosts: ims
+  user: root
+  tasks:
+    - name: configure hosts
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        line: "{{ item }}"
+      with_items:
+      - "hss.mnc042.mcc901.3gppnetwork.org 10.74.0.21"
+      - "hss.mnc070.mcc901.3gppnetwork.org 10.74.0.21"
+      - "hss.mnc042.mcc999.3gppnetwork.org 10.74.0.21"
+      - "hss.mnc070.mcc999.3gppnetwork.org 10.74.0.21"
+# TODO: add network configuration
+  roles:
+    - name: ims
+      ims_mcc: "901"
+      ims_mnc: "070"
+      ims_pcscf_sip_bind: "udp:10.74.0.31:5060"
+      ims_pcscf_diameter_bind_ip: 10.74.0.31
+      ims_pcscf_diameter_bind_port: 3868
+
+      ims_icscf_sip_bind: "udp:10.74.0.32:5060"
+      ims_icscf_diameter_bind_ip: 10.74.0.32
+      ims_icscf_diameter_bind_port: 3868
+
+      ims_scscf_sip_bind: "udp:10.74.0.33:5060"
+      ims_scscf_diameter_bind_ip: 10.74.0.33
+      ims_scscf_diameter_bind_port: 3868
