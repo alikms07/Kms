@@ -1,0 +1,7 @@
+---
+- name: install common packages
+  apt: 
+    pkg:
+    - ripgrep
+    - vim
+    - less
