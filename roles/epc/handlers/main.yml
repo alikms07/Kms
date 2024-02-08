@@ -1,0 +1,21 @@
+---
+
+- name: restart open5gs-hssd
+  service:
+    name: open5gs-hssd
+    state: restarted
+
+- name: restart open5gs-pcrfd
+  service:
+    name: open5gs-pcrfd
+    state: restarted
+
+- name: restart open5gs-smfd
+  service:
+    name: open5gs-smfd
+    state: restarted
+
+- name: restart open5gs-upfd
+  service:
+    name: open5gs-upfd
+    state: restarted

@@ -21,3 +21,5 @@
     epc_upf_bind_ip: 10.74.0.24
     epc_ue_network: 10.45.0.0/16
     epc_ue_dns: 8.8.4.4
+    # TODO: move those variable into a single file to not duplicate them between playbooks or create a big playbook
+    epdg_s6b_bind_ip: 10.74.0.12

@@ -6,24 +6,54 @@
   with_items:
   - 'ConnectPeer = "epdg.localdomain" { No_TLS; };'
   - 'ConnectPeer = "aaa.localdomain" { No_TLS; };'
+  notify: restart open5gs-hssd
+
+- name: configure hss diameter binds
+  ansible.builtin.lineinfile:
+    path: /etc/freeDiameter/hss.conf
+    line: 'ListenOn = "{{ epc_hss_bind_ip }}";'
+    regexp: '^ListenOn.*'
+  notify: restart open5gs-hssd
+
+# pcrf
+- name: configure pcrf diameter binds
+  ansible.builtin.lineinfile:
+    path: /etc/freeDiameter/pcrf.conf
+    line: 'ListenOn = "{{ epc_pcrf_bind_ip }}";'
+    regexp: '^ListenOn.*'
+  notify: restart open5gs-pcrfd
 
 - name: configure pcrf diameter connections
   ansible.builtin.lineinfile:
     path: /etc/freeDiameter/pcrf.conf
     line: 'ConnectPeer = "smf.localdomain" { ConnectTo = "{{ epc_smf_bind_ip }}"; No_TLS; };'
-    regexp: 'ConnectPeer = "smf.localdomain"'
+    regexp: '^ConnectPeer = "smf.localdomain"'
+  notify: restart open5gs-pcrfd
+
+# smf
+- name: configure smf diameter binds
+  ansible.builtin.lineinfile:
+    path: /etc/freeDiameter/smf.conf
+    line: 'ListenOn = "{{ epc_smf_bind_ip }}";'
+    regexp: '^ListenOn.*'
+  notify: restart open5gs-smfd
 
 - name: configure smf diameter connections
   ansible.builtin.lineinfile:
     path: /etc/freeDiameter/smf.conf
     line: 'ConnectPeer = "aaa.localdomain" { ConnectTo = "{{ epdg_s6b_bind_ip }}"; No_TLS; };'
+    regexp: '^ConnectPeer = "aaa.localdomain"'
+  notify: restart open5gs-smfd
 
 - name: configure smf open5gs
   template:
-    src: open5gs-smf.yaml
+    src: smf.yaml
     dest: /etc/open5gs/smf.yaml
+  notify: restart open5gs-smfd
   
+# upf
 - name: configure upf open5gs
   template:
-    src: open5gs-upf.yaml
+    src: upf.yaml
     dest: /etc/open5gs/upf.yaml
+  notify: restart open5gs-upfd
