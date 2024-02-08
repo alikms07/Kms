@@ -33,3 +33,17 @@
       - open5gs-pcrf
       - open5gs-smf
       - open5gs-upf
+
+- name: download open5gs-dbctl
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/open5gs/open5gs/v2.7.0/misc/db/open5gs-dbctl
+    dest: /usr/local/bin/open5gs-dbctl
+    checksum: "sha256:93b36e5ae387a993b5c4e9379f9e9d9a82c84c3029b420f0e1f47d168a0ea7e3"
+
+- name: set open5gs-dbctl executable
+  file:
+    path: /usr/local/bin/open5gs-dbctl
+    mode: "0755"
+
+- name: configure open5gs
+  include_tasks: configure-open5gs.yml
