@@ -5,3 +5,5 @@
     - ripgrep
     - vim
     - less
+    - tmux
+    - screen
