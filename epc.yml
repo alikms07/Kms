@@ -5,6 +5,15 @@
   roles:
   - name: common
   - name: authorized_keys
+  - name: network
+    net_interface: eth1
+    net_ips:
+    - 10.74.0.21/24
+    - 10.74.0.22/24
+    - 10.74.0.23/24
+    - 10.74.0.24/24
+    net_method: networkd
+
   - name: epc
     epc_hss_bind_ip: 10.74.0.21
     epc_pcrf_bind_ip: 10.74.0.22

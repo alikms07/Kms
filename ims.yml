@@ -13,7 +13,15 @@
       - "hss.mnc070.mcc999.3gppnetwork.org 10.74.0.21"
 # TODO: add network configuration
   roles:
+  - name: common
   - name: authorized_keys
+  - name: network
+    net_interface: eth1
+    net_ips:
+    - 10.74.0.31/24
+    - 10.74.0.32/24
+    - 10.74.0.33/24
+    net_method: ifupdown
 
   - name: ims
     ims_mcc: "901"

@@ -5,6 +5,14 @@
   roles:
   - name: common
   - name: authorized_keys
+  - name: network
+    net_interface: enp7s0
+    net_ips:
+    - 10.74.0.11/24
+    - 10.74.0.12/24
+    - 10.74.0.13/24
+    net_method: ifupdown
+
   - name: epdg
     epdg_ipsec_bind_ip: 213.95.46.81
     epdg_swx_hss_ip: 10.74.0.21

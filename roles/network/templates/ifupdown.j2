@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+
+{% for ip in net_ips %}
+auto {{ net_interface }}:{{ loop.index }}
+iface {{ net_interface }}:{{ loop.index }} inet static
+  address {{ ip }}
+
+{% endfor %}

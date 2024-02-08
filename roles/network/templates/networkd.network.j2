@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+[Match]
+Name={{ net_interface }}
+
+[Network]
+{% for ip in net_ips %}
+Address={{ ip }}
+{% endfor %}

@@ -1,0 +1,12 @@
+---
+
+- name: ensure interfaces.d exists
+  file:
+    path: /etc/network/interfaces.d
+    state: directory
+
+- name: configure network interface
+  template:
+    src: ifupdown.j2
+    dest: /etc/network/interfaces.d/ansible.conf
+  notify: ifup -a

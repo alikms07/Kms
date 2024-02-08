@@ -1,0 +1,9 @@
+---
+
+- name: use network configuration ifupdown
+  ansible.builtin.include_tasks: "ifupdown.yml"
+  when: net_method == "ifupdown"
+
+- name: use network configuration systemd-networkd
+  ansible.builtin.include_tasks: "networkd.yml"
+  when: net_method == "networkd"

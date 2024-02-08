@@ -1,0 +1,9 @@
+---
+
+- name: ifup -a
+  command: ifup -a
+
+- name: reload networkd
+  service:
+    name: systemd-networkd
+    state: reloaded
