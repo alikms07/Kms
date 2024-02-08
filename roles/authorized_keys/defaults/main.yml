@@ -1,0 +1,4 @@
+---
+authorized_keys_base_list: []
+authorized_keys_additional: []
+authorized_keys_user: "root"

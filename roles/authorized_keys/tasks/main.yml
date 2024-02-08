@@ -1,0 +1,14 @@
+---
+- name: Set up authorized_keys authorized_keys_base_list
+  authorized_key:
+    user: "{{ authorized_keys_user }}"
+    key: "{{ item }}"
+    manage_dir: yes
+  with_file: "{{ authorized_keys_base_list }}"
+
+- name: Set up authorized_keys authorized_keys_addtional
+  authorized_key:
+    user: "{{ authorized_keys_user }}"
+    key: "{{ item }}"
+    manage_dir: yes
+  with_file: "{{ authorized_keys_additional }}"
