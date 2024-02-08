@@ -36,6 +36,8 @@
     state: directory
   with_items:
   - "/usr/local/etc/swanctl"
+  - "/usr/local/etc/strongswan.d"
+  - "/usr/local/etc/strongswan.d/charon"
 
 - name: strongswan configuration files
   ansible.builtin.template:
@@ -43,6 +45,11 @@
     dest: "/usr/local/etc/{{ item }}"
   with_items:
   - "swanctl/swanctl.conf"
+
+- name: copy static strongswan configuration files
+  ansible.builtin.copy:
+    src: "eap-aka.conf"
+    dest: "/usr/local/etc/strongswan.d/charon/eap-aka.conf"
 
 - name: install rebar3
   ansible.builtin.apt:
