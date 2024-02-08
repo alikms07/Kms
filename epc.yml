@@ -4,6 +4,7 @@
   user: root
   roles:
   - name: common
+  - name: authorized_keys
   - name: epc
     epc_hss_bind_ip: 10.74.0.21
     epc_pcrf_bind_ip: 10.74.0.22

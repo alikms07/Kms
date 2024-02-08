@@ -1,0 +1,5 @@
+---
+
+authorized_keys_base_list:
+- lynxis.pub
+- pespin.pub
