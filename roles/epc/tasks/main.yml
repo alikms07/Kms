@@ -47,9 +47,3 @@
 
 - name: configure open5gs
   include_tasks: configure-open5gs.yml
-
-- name: install additional packages
-  ansible.builtin.apt:
-    pkg:
-      - libgtpnl-dev
-      - libgtpnl-tools
