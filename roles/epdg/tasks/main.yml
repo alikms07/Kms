@@ -1,11 +1,10 @@
 ---
 - name: install required packages
   ansible.builtin.apt:
+    cache_valid_time: 3600
     pkg:
       - iptables
       - linux-image-amd64
-      - libgtp6
-      #- libgtpnl-tools
       - apt-transport-https
 
 - name: install repo key
@@ -69,3 +68,10 @@
     dest: "/srv/osmo-epdg/config/local.config"
     variable_start_string: "$@"
     variable_end_string: "@$"
+
+- name: install additional osmocom packages
+  ansible.builtin.apt:
+    cache_valid_time: 3600
+    pkg:
+      - libgtpnl-dev
+      - libgtpnl-tools
