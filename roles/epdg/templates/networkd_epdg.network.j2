@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+
+[Match]
+Name={{ epdg_tun_interface }}
+
+# ip rule add fwmark {{ epdg_ipsec_traffic_fwmark }} table {{ epdg_ipsec_traffic_rtable_name }}
+[RoutingPolicyRule]
+FirewallMark={{ epdg_ipsec_traffic_fwmark }}
+Table={{ epdg_ipsec_traffic_rtable_name }}
+
+#ip route add default dev {{ epdg_tun_interface }} table {{ epdg_ipsec_traffic_rtable_name }}
+[Route]
+Gateway=0.0.0.0
+Table={{ epdg_ipsec_traffic_rtable_name }}

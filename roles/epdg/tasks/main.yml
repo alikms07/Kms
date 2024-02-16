@@ -75,3 +75,11 @@
     pkg:
       - libgtpnl-dev
       - libgtpnl-tools
+
+- name: setup ipsec traffic routing
+  ansible.builtin.include_tasks:
+    file: "epdg_ipsec_traffic.yml"
+    apply:
+      tags:
+        - epdg_ipsec_traffic
+  tags: epdg_ipsec_traffic

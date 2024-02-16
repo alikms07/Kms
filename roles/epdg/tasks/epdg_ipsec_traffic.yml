@@ -1,0 +1,41 @@
+---
+- name: create routing table epdg
+  lineinfile:
+    path: /etc/iproute2/rt_tables
+    line: "{{ epdg_ipsec_traffic_rtable_number }} {{ epdg_ipsec_traffic_rtable_name }}"
+    state: present
+    backup: yes
+
+- name: ensure interfaces.d exists (ifupdown)
+  file:
+    path: /etc/network/interfaces.d
+    state: directory
+  when: net_method == "ifupdown"
+
+- name: configure epdg specific interfaces (ifupdown)
+  template:
+    src: ifupdown_epdg.j2
+    dest: /etc/network/interfaces.d/epdg.conf
+  notify: ifup -a
+  when: net_method == "ifupdown"
+
+- name: ensure networkd.conf.d exists (ifupdown)
+  file:
+    path: /etc/systemd/networkd.conf.d/
+    state: directory
+  when: net_method == "networkd"
+
+- name: configure epdg routing table name (networkd)
+  template:
+    src: networkd_epdg.conf.j2
+    dest: /etc/systemd/networkd.conf.d/epdg.conf
+  notify: reload networkd
+  when: net_method == "networkd"
+
+- name: configure epdg specific interfaces (networkd)
+  template:
+    src: networkd_epdg.network.j2
+    dest: /etc/systemd/network/epdg.network
+  notify: reload networkd
+  when: net_method == "networkd"
+

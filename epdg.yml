@@ -14,6 +14,10 @@
     net_method: ifupdown
 
   - name: epdg
+    net_method: ifupdown
+    epdg_ipsec_traffic_fwmark: 2
+    epdg_ipsec_traffic_rtable_name: epdg
+    epdg_ipsec_traffic_rtable_number: 2
     epdg_tun_interface: gtp0
     epdg_ipsec_bind_ip: 213.95.46.81
     epdg_swx_hss_ip: 10.74.0.21

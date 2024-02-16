@@ -1,4 +1,10 @@
 ---
+epdg_ipsec_traffic_fwmark: 2
+epdg_ipsec_traffic_rtable_name: epdg
+epdg_ipsec_traffic_rtable_number: 2
+
+epdg_tun_interface: gtp0
+
 epdg_swx_hss_ip: 127.0.0.2
 epdg_swx_hss_port: 3868
 
