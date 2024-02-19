@@ -50,3 +50,11 @@
     name: "nftables"
     enabled: yes
     state: "started"
+
+  # Enable ip forwarding
+- ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: true
+    state: present
+    reload: true
