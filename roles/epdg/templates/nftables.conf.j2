@@ -1,0 +1,41 @@
+#!/usr/sbin/nft -f
+# {{ ansible_managed }}
+
+flush ruleset
+
+table ip filter {
+	chain INPUT {
+		type filter hook input priority filter; policy accept;
+	}
+
+	chain FORWARD {
+		type filter hook forward priority filter; policy accept;
+		meta ipsec exists oifname != "{{ epdg_tun_interface }}" counter drop comment "All decoded ipsec traffic must be forwarded to osmo-epdg"
+	}
+
+	chain OUTPUT {
+		type filter hook output priority filter; policy accept;
+	}
+}
+table ip mangle {
+	chain OUTPUT {
+		type route hook output priority mangle; policy accept;
+	}
+
+	chain PREROUTING {
+		type filter hook prerouting priority mangle; policy accept;
+		meta ipsec exists meta mark set {{ epdg_ipsec_traffic_fwmark }} comment "Route incoming ipsec decoded pkts to osmo-epdg"
+	}
+
+	chain POSTROUTING {
+		type filter hook postrouting priority mangle; policy accept;
+	}
+
+	chain INPUT {
+		type filter hook input priority mangle; policy accept;
+	}
+
+	chain FORWARD {
+		type filter hook forward priority mangle; policy accept;
+	}
+}

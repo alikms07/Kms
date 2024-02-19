@@ -39,3 +39,14 @@
   notify: reload networkd
   when: net_method == "networkd"
 
+- name: configure ipsec fwmark (nft)
+  template:
+    src: nftables.conf.j2
+    dest: /etc/nftables.conf
+  notify: reload nftables
+
+- name: enable and start nftables.service
+  ansible.builtin.systemd_service:
+    name: "nftables"
+    enabled: yes
+    state: "started"
