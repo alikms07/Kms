@@ -65,15 +65,20 @@
 - name: setup osmo-epdg repo
   ansible.builtin.git:
     repo: https://gitea.osmocom.org/erlang/osmo-epdg
-    dest: /srv/osmo-epdg
+    dest: "{{ epdg_checkout_path }}"
     update: no
 
 - name: osmo-epdg configuration
   ansible.builtin.template:
     src: "osmo-epdg/local.config"
-    dest: "/srv/osmo-epdg/config/local.config"
+    dest: "{{ epdg_config_file }}"
     variable_start_string: "$@"
     variable_end_string: "@$"
+
+- name: install osmo-epdg systemd service
+  ansible.builtin.template:
+    src: "osmo-epdg.service.j2"
+    dest: "/lib/systemd/system/osmo-epdg.service"
 
 - name: install additional osmocom packages
   ansible.builtin.apt:
@@ -89,3 +94,9 @@
       tags:
         - epdg_ipsec_traffic
   tags: epdg_ipsec_traffic
+
+- name: ensure osmo-epdg.service is enabled and started
+  ansible.builtin.systemd_service:
+    name: "osmo-epdg"
+    enabled: yes
+    state: "started"

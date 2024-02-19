@@ -1,0 +1,17 @@
+[Unit]
+Description=Osmocom ePDG (Evolved Packet Data Gateway)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+Restart=always
+WorkingDirectory={{ epdg_checkout_path }}
+Environment="ERL_FLAGS=-config {{ epdg_config_file }}"
+ExecStartPre=-/usr/bin/ip link del {{ epdg_tun_interface }}
+ExecStartPre=/usr/bin/mkdir -p {{ epdg_checkout_path }}
+ExecStart={{ epdg_checkout_path }}/_build/default/bin/osmo-epdg
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
