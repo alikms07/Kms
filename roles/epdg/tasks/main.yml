@@ -50,6 +50,12 @@
     src: "eap-aka.conf"
     dest: "/usr/local/etc/strongswan.d/charon/eap-aka.conf"
 
+- name: enable and start strongswan.service
+  ansible.builtin.systemd_service:
+    name: "strongswan"
+    enabled: yes
+    state: "started"
+
 - name: install rebar3
   ansible.builtin.apt:
     pkg:
