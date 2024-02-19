@@ -47,3 +47,8 @@
 
 - name: configure open5gs
   include_tasks: configure-open5gs.yml
+
+- name: overwrite open5gs network configuration for upfd
+  template:
+    src: "99-open5gs.network"
+    dest: "/etc/systemd/network/99-open5gs.network"
