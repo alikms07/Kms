@@ -7,10 +7,10 @@
         path: /etc/hosts
         line: "{{ item }}"
       with_items:
-      - "hss.mnc042.mcc901.3gppnetwork.org 10.74.0.21"
-      - "hss.mnc070.mcc901.3gppnetwork.org 10.74.0.21"
-      - "hss.mnc042.mcc999.3gppnetwork.org 10.74.0.21"
-      - "hss.mnc070.mcc999.3gppnetwork.org 10.74.0.21"
+      - "10.74.0.21 hss.mnc042.mcc901.3gppnetwork.org"
+      - "10.74.0.21 hss.mnc070.mcc901.3gppnetwork.org"
+      - "10.74.0.21 hss.mnc042.mcc999.3gppnetwork.org"
+      - "10.74.0.21 hss.mnc070.mcc999.3gppnetwork.org"
 # TODO: add network configuration
   roles:
   - name: common
