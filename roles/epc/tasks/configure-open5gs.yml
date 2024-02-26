@@ -50,7 +50,7 @@
     src: smf.yaml
     dest: /etc/open5gs/smf.yaml
   notify: restart open5gs-smfd
-  
+
 # upf
 - name: configure upf open5gs
   template:
