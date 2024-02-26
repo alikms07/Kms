@@ -6,3 +6,4 @@ epc_smf_bind_ip: 10.74.0.23
 epc_upf_bind_ip: 10.74.0.24
 epc_ue_network: 10.45.0.0/16
 epc_ue_dns: 8.8.4.4
+epc_pcscf_bind_ip_v4: 10.74.0.31

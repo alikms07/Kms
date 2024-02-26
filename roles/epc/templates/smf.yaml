@@ -38,8 +38,8 @@ smf:
   dns:
     - {{ epc_ue_dns }}
   mtu: 1400
-#  p-cscf:
-#    - 127.0.0.1
+  p-cscf:
+    - {{ epc_pcscf_bind_ip_v4 }}
 #    - ::1
 #  ctf:
 #    enabled: auto   # auto(default)|yes|no
