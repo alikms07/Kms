@@ -16,7 +16,7 @@
   - name: common
   - name: authorized_keys
   - name: network
-    net_interface: eth1
+    net_interface: enp7s0
     net_ips:
     - 10.74.0.31/24
     - 10.74.0.32/24
