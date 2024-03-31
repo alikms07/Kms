@@ -10,7 +10,7 @@ table ip filter {
 
 	chain FORWARD {
 		type filter hook forward priority filter; policy accept;
-		meta ipsec exists oifname != "{{ epdg_tun_interface }}" counter drop comment "All decoded ipsec traffic must be forwarded to osmo-epdg"
+		meta ipsec exists oifname != "{{ epdg_tun_interface }}" counter drop comment "All decoded ipsec traffic must be forwarded to osmo-epdg";
 	}
 
 	chain OUTPUT {
@@ -24,7 +24,8 @@ table ip mangle {
 
 	chain PREROUTING {
 		type filter hook prerouting priority mangle; policy accept;
-		meta ipsec exists meta mark set {{ epdg_ipsec_traffic_fwmark }} comment "Route incoming ipsec decoded pkts to osmo-epdg"
+		meta ipsec exists meta mark set {{ epdg_ipsec_traffic_fwmark }} comment "Route incoming ipsec decoded pkts to osmo-epdg";
+		meta iifname "{{ epdg_tun_interface }}" meta mark set {{ epdg_gtp_traffic_fwmark }} comment "Route incoming gtp decoded pkts from osmo-epdg";
 	}
 
 	chain POSTROUTING {
