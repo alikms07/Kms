@@ -6,8 +6,8 @@ After=network-online.target
 
 [Service]
 Type=forking
-User=kamailio
-Group=kamailio
+User=root
+Group=root
 Environment='CFGFILE=/etc/kamailio_{{ item }}/kamailio.cfg'
 Environment='SHM_MEMORY=64'
 Environment='PKG_MEMORY=8'
