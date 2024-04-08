@@ -72,8 +72,8 @@
   ansible.builtin.template:
     src: "osmo-epdg/local.config"
     dest: "{{ epdg_config_file }}"
-    variable_start_string: "$@"
-    variable_end_string: "@$"
+    variable_start_string: "%+"
+    variable_end_string: "+%"
 
 - name: install osmo-epdg systemd service
   ansible.builtin.template:
