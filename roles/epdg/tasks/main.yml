@@ -74,6 +74,8 @@
     dest: "{{ epdg_config_file }}"
     variable_start_string: "%+"
     variable_end_string: "+%"
+    block_start_string: "noexistent_block_start_string"
+    block_end_string: "noexistent_block_end_string"
 
 - name: install osmo-epdg systemd service
   ansible.builtin.template:

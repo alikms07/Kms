@@ -2,6 +2,8 @@
 - name: epdg
   hosts: epdg
   user: root
+  vars_files:
+    - "vars/network.yml"
   roles:
   - name: common
   - name: authorized_keys
@@ -24,3 +26,4 @@
     epdg_gtpc_bind_ip: 10.74.0.12
     epdg_gtpc_pgw_ip: 10.74.0.23
     epdg_s6b_bind_ip: 10.74.0.12
+    epdg_diameter_realm: "{{ diameter_realm }}"

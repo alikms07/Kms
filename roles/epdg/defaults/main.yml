@@ -18,3 +18,4 @@ epdg_gtpc_bind_port: 2123
 
 epdg_gtpc_pgw_ip: 127.0.0.3
 epdg_gtpc_pgw_port: 2123
+epdg_diameter_realm: "localdomain"
