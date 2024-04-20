@@ -1,64 +1,30 @@
 ---
-- name: configure hss diameter connections for epdg
-  ansible.builtin.lineinfile:
-    path: /etc/freeDiameter/hss.conf
-    line: "{{ item }}"
-  with_items:
-  - 'ConnectPeer = "epdg.localdomain" { No_TLS; };'
-  - 'ConnectPeer = "aaa.localdomain" { No_TLS; };'
-  notify: restart open5gs-hssd
 
-- name: configure hss diameter connections for ims
-  ansible.builtin.lineinfile:
-    path: /etc/freeDiameter/hss.conf
-    line: "{{ item }}"
-  with_items:
-  - 'ConnectPeer = "icscf.ims.mnc{{ ims_mnc }}.mcc{{ ims_mcc }}.3gppnetwork.org" { ConnectTo = "{{ ims_icscf_diameter_bind_ip }}"; Realm = "ims.mnc{{ ims_mnc }}.mcc{{ ims_mcc }}.3gppnetwork.org"; No_TLS; No_TCP; };'
-  - 'ConnectPeer = "scscf.ims.mnc{{ ims_mnc }}.mcc{{ ims_mcc }}.3gppnetwork.org" { ConnectTo = "{{ ims_scscf_diameter_bind_ip }}"; Realm = "ims.mnc{{ ims_mnc }}.mcc{{ ims_mcc }}.3gppnetwork.org"; No_TLS; No_TCP; };'
-  when: ims_mcc is defined
-  notify: restart open5gs-hssd
-
-- name: configure hss diameter binds
-  ansible.builtin.lineinfile:
-    path: /etc/freeDiameter/hss.conf
-    line: 'ListenOn = "{{ epc_hss_bind_ip }}";'
-    regexp: '^ListenOn.*'
+# hss
+- name: configure freediameter open5gs
+  template:
+    src: hss.conf
+    dest: /etc/freeDiameter/hss.conf
   notify: restart open5gs-hssd
 
 # pcrf
-- name: configure pcrf diameter binds
-  ansible.builtin.lineinfile:
-    path: /etc/freeDiameter/pcrf.conf
-    line: 'ListenOn = "{{ epc_pcrf_bind_ip }}";'
-    regexp: '^ListenOn.*'
-  notify: restart open5gs-pcrfd
-
-- name: configure pcrf diameter connections
-  ansible.builtin.lineinfile:
-    path: /etc/freeDiameter/pcrf.conf
-    line: 'ConnectPeer = "smf.localdomain" { ConnectTo = "{{ epc_smf_bind_ip }}"; No_TLS; };'
-    regexp: '^ConnectPeer = "smf.localdomain"'
+- name: configure pcrf
+  template:
+    src: pcrf.conf
+    dest: /etc/freeDiameter/pcrf.conf
   notify: restart open5gs-pcrfd
 
 # smf
-- name: configure smf diameter binds
-  ansible.builtin.lineinfile:
-    path: /etc/freeDiameter/smf.conf
-    line: 'ListenOn = "{{ epc_smf_bind_ip }}";'
-    regexp: '^ListenOn.*'
-  notify: restart open5gs-smfd
-
-- name: configure smf diameter connections
-  ansible.builtin.lineinfile:
-    path: /etc/freeDiameter/smf.conf
-    line: 'ConnectPeer = "aaa.localdomain" { ConnectTo = "{{ epdg_s6b_bind_ip }}"; No_TLS; };'
-    regexp: '^ConnectPeer = "aaa.localdomain"'
-  notify: restart open5gs-smfd
-
-- name: configure smf open5gs
+- name: configure smf.yaml open5gs
   template:
     src: smf.yaml
     dest: /etc/open5gs/smf.yaml
+  notify: restart open5gs-smfd
+
+- name: configure smf diameter open5gs
+  template:
+    src: smf.conf
+    dest: /etc/freeDiameter/smf.conf
   notify: restart open5gs-smfd
 
 # upf
