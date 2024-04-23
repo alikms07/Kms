@@ -3,6 +3,8 @@ epdg_checkout_path: "/srv/osmo-epdg"
 epdg_config_file: "{{ epdg_checkout_path }}/config/local.config"
 epdg_ipsec_traffic_fwmark: 2
 epdg_gtp_traffic_fwmark: 4
+
+# traffic from ipsec towards pgw
 epdg_ipsec_traffic_rtable_name: epdg
 epdg_ipsec_traffic_rtable_number: 2
 
