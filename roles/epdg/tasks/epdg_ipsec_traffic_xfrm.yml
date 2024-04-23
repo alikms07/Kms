@@ -27,21 +27,21 @@
 
 - name: configure epdg routing table name (networkd)
   template:
-    src: networkd_epdg.conf.j2
+    src: xfrm/networkd_epdg.conf.j2
     dest: /etc/systemd/networkd.conf.d/epdg.conf
   notify: reload networkd
   when: net_method == "networkd"
 
 - name: configure epdg specific interfaces (networkd)
   template:
-    src: networkd_epdg.network.j2
+    src: xfrm/networkd_epdg.network.j2
     dest: /etc/systemd/network/epdg.network
   notify: reload networkd
   when: net_method == "networkd"
 
 - name: configure ipsec fwmark (nft)
   template:
-    src: nftables.conf.j2
+    src: nftables.conf.xfrm.j2
     dest: /etc/nftables.conf
   notify: reload nftables
 
