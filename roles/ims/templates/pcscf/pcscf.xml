@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DiameterPeer 
-	FQDN="pcscf.mnc{{ ims_mnc }}.mcc{{ ims_mcc }}.3gppnetwork.org"
+	FQDN="pcscf.ims.mnc{{ ims_mnc }}.mcc{{ ims_mcc }}.3gppnetwork.org"
 	Realm="ims.mnc{{ ims_mnc }}.mcc{{ ims_mcc }}.3gppnetwork.org"
 	Vendor_Id="10415"
 	Product_Name="CDiameterPeer"
@@ -14,7 +14,7 @@
 	DefaultAuthSessionTimeout="3600"
 	MaxAuthSessionTimeout="3600"
 >
-	<Peer FQDN="pcrf.mnc{{ ims_mnc }}.mnc{{ ims_mcc }}.3gppnetwork.org" Realm="ims.mnc{{ ims_mnc }}.mnc{{ ims_mcc }}.3gppnetwork.org" port="3868"/> 
+	<Peer FQDN="pcrf.mnc{{ ims_mnc }}.mnc{{ ims_mcc }}.3gppnetwork.org" Realm="mnc{{ ims_mnc }}.mnc{{ ims_mcc }}.3gppnetwork.org" port="3868"/> 
 
 	<Acceptor port="{{ ims_pcscf_diameter_bind_port }}" bind="{{ ims_pcscf_diameter_bind_ip }}"/>
 
