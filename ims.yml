@@ -28,7 +28,8 @@
   - name: ims
     ims_mcc: "{{ mcc }}"
     ims_mnc: "{{ mnc }}"
-    ims_pcscf_sip_bind: "udp:10.74.0.31:5060"
+    ims_pcscf_sip_bind: "10.74.0.31:5060"
+    ims_pcscf_ipsec_bind: "10.74.0.31"
     ims_pcscf_diameter_bind_ip: 10.74.0.31
     ims_pcscf_diameter_bind_port: 3868
 

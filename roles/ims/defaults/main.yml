@@ -9,7 +9,8 @@ ims_pcscf_db_init: false
 ims_pcscf_db: pcscf
 ims_pcscf_user: pcscf
 ims_pcscf_pass: pcscf
-ims_pcscf_sip_bind: "udp:0.0.0.0:5060"
+ims_pcscf_sip_bind: "0.0.0.0:5060"
+ims_pcscf_ipsec_bind: "0.0.0.0"
 ims_pcscf_diameter_bind_ip: 192.168.150.155
 ims_pcscf_diameter_bind_port: 3868
 
