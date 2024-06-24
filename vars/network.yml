@@ -1,3 +1,7 @@
 ---
 
+mcc: "901"
+mnc: "070"
+# the diameter_realm for the epc/epdg
+# note: ims is based on mnc/mcc direct
 diameter_realm: "mnc070.mcc901.3gppnetwork.org"

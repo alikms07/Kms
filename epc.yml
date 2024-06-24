@@ -2,6 +2,8 @@
 - name: epc
   hosts: epc
   user: root
+  vars_files:
+    - "vars/network.yml"
   roles:
   - name: common
   - name: authorized_keys

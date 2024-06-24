@@ -1,6 +1,8 @@
 - name: host ims
   hosts: ims
   user: root
+  vars_files:
+    - "vars/network.yml"
   tasks:
     - name: configure hosts
       ansible.builtin.lineinfile:
