@@ -10,8 +10,9 @@ table ip filter {
 	}
 
 	chain FORWARD {
-		type filter hook forward priority filter; policy accept;
-		meta ipsec exists oifname != "{{ epdg_tun_interface }}" counter drop comment "All decoded ipsec traffic must be forwarded to osmo-epdg";
+		type filter hook forward priority filter; policy drop;
+		meta ipsec exists oifname == "{{ epdg_tun_interface }}" counter accept comment "All decoded ipsec traffic forwarded to osmo-epdg";
+		iifname "gtp0" meta mark {{ epdg_gtp_traffic_fwmark }} accept comment "Accept all traffic from the gtp interface";
 	}
 
 	chain OUTPUT {

@@ -3,10 +3,17 @@
 [Match]
 Name={{ epdg_tun_interface }}
 
-# ip rule add fwmark {{ epdg_ipsec_traffic_fwmark }} table {{ epdg_ipsec_traffic_rtable_name }}
+# ip rule add fwmark {{ epdg_ipsec_traffic_fwmark }} table {{ epdg_ipsec_traffic_rtable_name }} priority 220
 [RoutingPolicyRule]
 FirewallMark={{ epdg_ipsec_traffic_fwmark }}
 Table={{ epdg_ipsec_traffic_rtable_name }}
+Priority=220
+
+# ip rule add fwmark {{ epdg_ipsec_traffic_fwmark }} blackhole priority 221
+[RoutingPolicyRule]
+FirewallMark={{ epdg_ipsec_traffic_fwmark }}
+Priority=221
+Type=blackhole
 
 #ip route add default dev {{ epdg_tun_interface }} table {{ epdg_ipsec_traffic_rtable_name }}
 [Route]

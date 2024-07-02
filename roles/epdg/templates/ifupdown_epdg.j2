@@ -2,7 +2,9 @@
 
 allow-hotplug {{ epdg_tun_interface }}
 iface {{ epdg_tun_interface }} inet manual
-	up ip rule add fwmark {{ epdg_ipsec_traffic_fwmark }} table {{ epdg_ipsec_traffic_rtable_name }}
+	up ip rule add fwmark {{ epdg_ipsec_traffic_fwmark }} table {{ epdg_ipsec_traffic_rtable_name }} priority 220
+	up ip rule add fwmark {{ epdg_ipsec_traffic_fwmark }} priority 221 type blackhole
 	up ip route add default dev {{ epdg_tun_interface }} table {{ epdg_ipsec_traffic_rtable_name }}
 	down ip route del default dev {{ epdg_tun_interface }} table {{ epdg_ipsec_traffic_rtable_name }}
-	down ip rule del fwmark {{ epdg_ipsec_traffic_fwmark }} table {{ epdg_ipsec_traffic_rtable_name }}
+	down ip rule del fwmark {{ epdg_ipsec_traffic_fwmark }} priority 221 type blackhole
+	down ip rule del fwmark {{ epdg_ipsec_traffic_fwmark }} table {{ epdg_ipsec_traffic_rtable_name }} priority 220
